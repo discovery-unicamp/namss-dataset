@@ -1,0 +1,4 @@
+https://walrus.wr.usgs.gov/namss/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureList&LAYERS=namss&STYLES=&BBOX=-15399920.962671028%2C-10801469.341034831%2C3991847.365165044%2C-2524256.422089661&WIDTH=991&HEIGHT=423&FORMAT=image%2Fpng&TRANSPARENT=TRUE&BGCOLOR=0xffffff&FILTERS=data-type%3B2D%20Multichannel%20Seismic&SRS=EPSG%3A3857&QUERY_LAYERS=namss&INFO_FORMAT=text%2Fcsv
+Survey ID (Name),Contributor,Data Type,Year,Planning Area (Region),Protraction Area,"Other Survey Identifiers (Permit, etc.)",Link To Survey Web Page
+W-95-92-SA,WesternGeco,2D Multichannel Seismic,1992,,,9500,https://walrus.wr.usgs.gov/namss/survey/w-95-92-sa/
+W-4-77-SA,WesternGeco,2D Multichannel Seismic,1977,,,9004,https://walrus.wr.usgs.gov/namss/survey/w-4-77-sa/
