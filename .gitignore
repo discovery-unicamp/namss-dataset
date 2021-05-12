@@ -1,1 +1,3 @@
 SEGY_binary_header_fields.txt
+*.swp
+__pycache__/
