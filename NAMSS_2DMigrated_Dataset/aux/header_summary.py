@@ -24,6 +24,8 @@ IEEE_SAMPLE_FORMAT = 5
 # Trace Header bytes
 TRACE_CDP = 21
 TRACE_ID = 29
+TRACE_SCALCO = 71
+TRACE_UNITCO = 89
 TRACE_NS = 115
 TRACE_DT = 117
 
@@ -42,6 +44,9 @@ def read_file_info(segy_file):
 
         # Trace Sorting Code (3229-3230)
         info['SORTING CODE'] = read_field(stream, 3229)
+
+        # Measurement System. 1 = Meters, 2 = Feet (3255-3256)
+        info['MEASUREMENT SYSTEM'] = read_field(stream, 3255)
 
         # SEGY Revision (3501-3502)
         info['SEGY REVISION'] = read_field(stream, 3501)
@@ -71,8 +76,11 @@ def read_file_info(segy_file):
         trace_IDs = set()
         trace_NSs = set()
         trace_DTs = set()
+        trace_SCALCOs = set()
+        trace_UNITCOs = set()
+
         trace_CDPs = list()
-        DT_diff = []
+        DT_diff = list()
         num_traces = 0
 
         header_offset = TEXTUAL_HEADER_SIZE + BINARY_HEADER_SIZE
@@ -80,6 +88,8 @@ def read_file_info(segy_file):
             trace_id = read_field(stream, header_offset + TRACE_ID)
             trace_ns = read_field(stream, header_offset + TRACE_NS)
             trace_dt = read_field(stream, header_offset + TRACE_DT)
+            trace_scalco = read_field(stream, header_offset + TRACE_SCALCO)
+            trace_unitco = read_field(stream, header_offset + TRACE_UNITCO)
             trace_cdp = read_field(stream, header_offset + TRACE_CDP, field_size=4)
 
             if trace_id is None or trace_ns is None or trace_dt is None:
@@ -88,6 +98,9 @@ def read_file_info(segy_file):
             trace_IDs.add(trace_id)
             trace_NSs.add(trace_ns)
             trace_DTs.add(trace_dt)
+            trace_SCALCOs.add(trace_scalco)
+            trace_UNITCOs.add(trace_unitco)
+
             trace_CDPs.append(trace_cdp)
 
             if trace_dt != bin_dt:
@@ -101,6 +114,9 @@ def read_file_info(segy_file):
         info['TRACE IDENTIFICATION'] = ', '.join([str(tid) for tid in trace_IDs])
         info['TRACE NS'] = ', '.join([str(tns) for tns in trace_NSs])
         info['TRACE DT'] = ', '.join([str(tdt) for tdt in trace_DTs])
+        info['TRACE SCALCO'] = ', '.join([str(tsc) for tsc in trace_SCALCOs])
+        info['TRACE UNITCO'] = ', '.join([str(tuc) for tuc in trace_UNITCOs])
+
         info['DT DIFF TRACE IND'] = ', '.join([str(tdt) for tdt in DT_diff])
         info['ORDERED BY CDP'] = ordered_cdp(trace_CDPs)
         info['MIN CDP'] = min(trace_CDPs)

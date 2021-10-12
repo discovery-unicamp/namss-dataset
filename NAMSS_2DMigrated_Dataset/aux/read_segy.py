@@ -20,14 +20,13 @@ DEAD_TRACE_ID = 2
 SEISMIC_TRACE_ID = 1
 
 
-# Currently, only INT field type is implemented
 def read_field(stream, byte_addr, field_size=2):
     stream.seek(byte_addr - 1)
     field = stream.read(field_size)
     if not field:
         return None
     else:
-        return int.from_bytes(field, 'big')
+        return int.from_bytes(field, 'big', signed=True)
 
 
 def read_trace_data(stream, trace_ind, bin_ns, sample_format, mute_dead_trace=True):

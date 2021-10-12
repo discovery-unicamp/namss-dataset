@@ -5,12 +5,14 @@ import csv
 import numpy as np
 import os
 
-from ibm2ieee import ibm2float32 
+from read_segy import read_field, read_seismic_data
 from tqdm import tqdm
+
+import warnings ; warnings.filterwarnings("ignore")
 
 
 SURVEYS_DIR = '../Migrated_Files'
-CSV_FILE = 'data_summary_log.csv'
+CSV_FILE = 'data_summary.csv'
 
 
 # SEGY file constants
@@ -18,41 +20,17 @@ TEXTUAL_HEADER_SIZE = 3200
 BINARY_HEADER_SIZE = 400
 TRACE_HEADER_SIZE = 240
 BYTES_PER_SAMPLE = 4
-IBM_SAMPLE_FORMAT = 1
-IEEE_SAMPLE_FORMAT = 5
 
 MAX_FLOAT = np.finfo(np.float32).max
-ZERO = 1e-37
-
-
-def read_field(stream, byte_addr):
-    stream.seek(byte_addr - 1)
-    return int.from_bytes(stream.read(2), 'big')
-
-
-def read_trace(stream, trace_ind, trace_ns, sample_format):
-    trace_size = TRACE_HEADER_SIZE + trace_ns*BYTES_PER_SAMPLE
-    data_offset = TEXTUAL_HEADER_SIZE + BINARY_HEADER_SIZE + trace_ind*trace_size + TRACE_HEADER_SIZE
-    stream.seek(data_offset)
-
-    data = stream.read(trace_ns*BYTES_PER_SAMPLE)
-    if not data:
-        return None
-    if sample_format == IBM_SAMPLE_FORMAT:
-        data = np.frombuffer(data, dtype='>u4')
-        data = ibm2float32(data)
-    elif sample_format == IEEE_SAMPLE_FORMAT:
-        data = np.frombuffer(data, dtype='>f4')
-    else:
-        data = None
-        print("Sample format", sample_format, "not implemented.")
-
-    return data
+#ZERO = 1e-37
+ZERO = np.finfo(np.float64).tiny
 
 
 def read_file_info(segy_file):
+    info = dict()
+
+    # Read metadata info
     with open(segy_file, 'rb') as stream:
-        info = dict()
 
         # Data format (3225-3226)
         sample_format = read_field(stream, 3225) 
@@ -77,14 +55,9 @@ def read_file_info(segy_file):
         info['NUM TRACES'] = num_traces
         info['NUM SAMPLES'] = num_samples
 
+    try:
         # Read data
-        traces = []
-        for i in range(num_traces):
-            trace_data = read_trace(stream, i, trace_ns, sample_format)
-            if trace_data is None:
-                break
-            traces.append(trace_data)
-        data = np.array(traces).T
+        data = read_seismic_data(segy_file)
 
         # Get number of zeros and ratio to total num. of samples
         data_abs = np.abs(data)
@@ -93,9 +66,7 @@ def read_file_info(segy_file):
         info['NUM ZEROS'] = num_zeros
         info['N_ZERO/N_SAMP'] = num_zeros/num_samples
 
-        # Discard zero values and replace Inf with Max Float
         data_abs = data_abs[data_abs > ZERO]
-        data_abs[data_abs == np.Inf] = MAX_FLOAT
 
         # Get min and max from absolute non-zero values
         info['MIN ABS N0 VALUE'] = data_abs.min()
@@ -110,6 +81,8 @@ def read_file_info(segy_file):
         # Get max log and ratio of max to avg log 
         info['ABS MAX LOG'] = logs.max()
         info['MAX_LOG - AVG_LOG'] = logs.max() - logs.mean() 
+    except:
+        pass
 
     return info
 
