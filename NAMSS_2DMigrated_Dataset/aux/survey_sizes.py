@@ -4,7 +4,8 @@
 import csv
 import os
 
-readdir = '../Migrated_Balanced'
+#readdir = '../Migrated_Balanced'
+readdir = '../Migrated_CSV'
 
 
 def read_csv(csvfile):
@@ -36,9 +37,11 @@ def main():
             vmax = total_size
             vmax_data = fname
         all_datasets_size += total_size
-    #print("MIN: {} {:.2f}".format(vmin_data, vmin))
-    #print("MAX: {} {:.2f}".format(vmax_data, vmax))
-    #print("TOTAL: {:.2f}".format(all_datasets_size))
+
+    print()
+    print("MIN: {} {:.2f}".format(vmin_data, vmin))
+    print("MAX: {} {:.2f}".format(vmax_data, vmax))
+    print("TOTAL: {:.2f}".format(all_datasets_size))
 
 
 

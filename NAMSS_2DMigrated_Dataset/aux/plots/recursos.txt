@@ -1,0 +1,19 @@
+# Seaborn
+
+https://github.com/kimfetti/Videos/blob/master/Seaborn/03_distplot.ipynb
+https://www.youtube.com/watch?v=vaf4ir8eT38&list=PLtPIclEQf-3cG31dxSMZ8KTcDG7zYng1j
+
+# Lingua
+
+https://www.conjugacao.com.br/verbo-permitir/
+https://www.academia.org.br/nossa-lingua/busca-no-vocabulario
+
+# Plotar retângulo (bbox)
+
+http://www.ntlis.nt.gov.au/metadata/export_data?type=html&metadata_id=FB25348A02CB16B2E040CD9B2144584B
+https://matplotlib.org/stable/api/_as_gen/matplotlib.patches.Rectangle.html#examples-using-matplotlib-patches-rectangle
+https://matplotlib.org/stable/gallery/shapes_and_collections/artist_reference.html#sphx-glr-gallery-shapes-and-collections-artist-reference-py
+https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots
+https://matplotlib.org/stable/gallery/statistics/errorbars_and_boxes.html#sphx-glr-gallery-statistics-errorbars-and-boxes-py
+https://matplotlib.org/stable/api/collections_api.html#matplotlib.collections.PatchCollection
+
