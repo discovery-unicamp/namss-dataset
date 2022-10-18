@@ -14,10 +14,10 @@ from tqdm import tqdm
 
 
 # Choose png, jpg or tiff
-IMG_FORMAT = 'png'
+IMG_FORMAT = 'tiff'
 
 SURVEYS_DIR = 'Migrated_Files'
-IMG_DIR = 'Migrated_PNG'
+IMG_DIR = 'Migrated_' + IMG_FORMAT.upper()
 LOG_DIR = 'logs'
 
 @lru_cache(maxsize=None)
