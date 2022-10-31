@@ -11,7 +11,6 @@ from tqdm import tqdm
 
 
 SOURCE_DIR = './Migrated_TIFF'
-SOURCE_DIR = './Test_BIG'
 TARGET_DIR = '../../Data/NAMSS/NAMSS_{}_HR'
 
 DIVISIBLE_BY = 12
