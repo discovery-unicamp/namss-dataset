@@ -1,8 +1,9 @@
 logs/
-Migrated_Files/
-Test_Files/
-tests/
 Meshed_Survey_Headers/
+Migrated_Files/
 Migrated_PNG/
 Survey_Headers/
+Test_Files/
+tests/
+tmp/
 Var_Trace_Surveys/
