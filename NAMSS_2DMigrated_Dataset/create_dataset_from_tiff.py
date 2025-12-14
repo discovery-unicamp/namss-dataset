@@ -11,7 +11,7 @@ from tqdm import tqdm
 
 
 SOURCE_DIR = './Migrated_TIFF'
-TARGET_DIR = '../../Data/NAMSS/NAMSS_{}_HR'
+TARGET_DIR = '../Data/NAMSS/NAMSS_{}_HR'
 
 DIVISIBLE_BY = 12
 SMALLEST_IMG_SIZE = 192
@@ -29,7 +29,7 @@ def discard_line(fpath, survey):
 
 print("\nThis script will read TIFF images from ", SOURCE_DIR, ", disregarding files which are in the discarded list, crop the images, and save them to ", TARGET_DIR.format("{train/valid/test}"), ".\n", sep='')
 
-input("Press ENTER to continue or Ctrl+C to abort.")
+input("Press any key to continue or Ctrl+C to abort.")
 print()
 
 start_time = time()

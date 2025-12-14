@@ -3,3 +3,5 @@ TraceHeaderFields_Rev0.txt
 *.swp
 __pycache__/
 .ipynb_checkpoints/
+Data/
+NAMSS_2DMigrated_Dataset/Migrated_TIFF/
