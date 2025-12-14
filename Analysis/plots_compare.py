@@ -8,8 +8,6 @@ from umap import UMAP
 from utils import (
     model_resnet50_coco,
     model_dinov2_vitb14,
-    pad_to_multiple,
-    free_gc_decorator,
 )
 import plotly.express as px
 from plotly.subplots import make_subplots
@@ -152,7 +150,8 @@ def get_umap_for_all_datasets(model: str, **umap_kwargs) -> pd.DataFrame:
     # Create DataFrame
     umap_df = pd.DataFrame(umap_results, columns=["UMAP1", "UMAP2"])
     dataset_labels = []
-    for dataset_name, embeddings in feature_dict.items():
+    for dataset_name in sorted(feature_dict.keys()):
+        embeddings = feature_dict[dataset_name]
         dataset_labels.extend([dataset_name] * embeddings.shape[0])
     umap_df["dataset"] = dataset_labels
     return umap_df
@@ -261,7 +260,7 @@ def plot_umap_with_density(
             borderwidth=1,
         ),
         margin=dict(t=100, b=40),
-        font=dict(family="Times New Roman", size=16)
+        font=dict(family="Times New Roman", size=24)
     )
 
     # Move colorbar so legend doesn’t overlap (for density heatmap/contour)
