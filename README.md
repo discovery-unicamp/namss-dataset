@@ -11,14 +11,6 @@ conda env create -f environment.yml
 conda activate namss
 ```
 
-## Directory Structure
-
-The repository is organized as follows:
-
-```
-...
-```
-
 ## Quick Start
 
 The repository includes scripts to download and process the dataset, as well as Jupyter notebooks for analysis and visualization.
