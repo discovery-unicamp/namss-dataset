@@ -5,3 +5,5 @@ __pycache__/
 .ipynb_checkpoints/
 Data/
 NAMSS_2DMigrated_Dataset/Migrated_TIFF/
+*.npy
+*.npz
