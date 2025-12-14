@@ -1,7 +1,6 @@
 from typing import Optional, Union
 import pandas as pd
 import numpy as np
-import torch
 from pathlib import Path
 from umap import UMAP
 import plotly.express as px
@@ -12,8 +11,6 @@ from embedding_namss import load_or_extract_embeddings
 from utils import (
     model_resnet50_coco,
     model_dinov2_vitb14,
-    pad_to_multiple,
-    free_gc_decorator,
 )
 
 METADATA_ALL_PATH = Path("../NAMSS_Metadata/2DSeismic_all_metadata.csv")
@@ -183,7 +180,7 @@ def multi_plot(
             width=800,
             symbol_sequence=["circle-open"],
         )
-        fig.update_layout(font=dict(family="Times New Roman", size=16))
+        fig.update_layout(font=dict(family="Times New Roman", size=24))
 
         output_path = Path(
             figures_path
