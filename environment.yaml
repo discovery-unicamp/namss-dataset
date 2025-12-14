@@ -1,0 +1,34 @@
+name: namss
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.10
+  - pip
+
+  # ---- Core scientific stack ----
+  - numpy<2
+  - matplotlib
+  - imageio
+  - imageio-ffmpeg 
+  - pillow
+  - requests
+  - tqdm
+  - beautifulsoup4
+  - lxml
+  - ipykernel
+  - geopandas
+  - shapely
+  - pandas
+  - umap-learn
+  - plotly
+  - nbformat
+
+  # ---- Deep Learning ----
+  - pytorch
+  - torchvision
+  - pip:
+    - ibm2ieee
+    - kaleido==0.2.1
