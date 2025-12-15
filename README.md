@@ -24,6 +24,8 @@ To download the dataset, run the following command:
 ```bash
 cd NAMSS_2DMigrated_Dataset
 ./download_migrated_data.sh 
+# Survey W-29-80-WO direct file links are broken, so we download manually:
+./download_w-29-80-wo.sh
 ```
 
 This script will read all CSV files in `NAMSS_2DMigrated_Dataset/Migrated_Balanced` folder, download all files listed in it and save it into `NAMSS_2DMigrated_Dataset/Migrated_files` folder, which will contain a subfolder for each survey, and each survey folder will contain the downloaded SEGY files.
