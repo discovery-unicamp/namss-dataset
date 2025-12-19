@@ -47,7 +47,7 @@ To create training, validation, and test splits of the dataset, run:
 
 ```bash
 cd NAMSS_2DMigrated_Dataset
-python create_splits.py
+python create_dataset_from_tiff.py
 ```
 
 This script will split the dataset and save the splits in the `Data/NAMSS/NAMSS_{train/val/test}` folders.
