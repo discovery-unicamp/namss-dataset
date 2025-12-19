@@ -17,7 +17,7 @@ The repository includes scripts to download and process the dataset, as well as 
 There are several ways to customize the dataset processing, which user may refer to the `NAMSS_Metadata` and `NAMSS_2DMigrated_Dataset` README files for more details.
 We already made available many of default values and configurations to facilitate the quick start.
 
-### Dataset Download
+### Download Original Data
 
 To download the dataset, run the following command:
 
@@ -47,7 +47,7 @@ To create training, validation, and test splits of the dataset, run:
 
 ```bash
 cd NAMSS_2DMigrated_Dataset
-python create_splits.py
+python create_dataset_from_tiff.py
 ```
 
 This script will split the dataset and save the splits in the `Data/NAMSS/NAMSS_{train/val/test}` folders.
