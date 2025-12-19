@@ -11,11 +11,11 @@ from utils import (
 )
 import plotly.express as px
 from plotly.subplots import make_subplots
+import gc
 
-MODEL = "resnet50_coco" # "resnet50_coco" or "dinov2_vitb14"
 UMAP_FIGURES_PATH = Path("figures/umap")
 
-NAMSS_DATA_PATH = Path("../Data/NAMSS")
+NAMSS_DATA_PATH = Path("../Data/unicamp-namss-dataset")
 # F3 Netherlands block from Aludah. Download link: https://zenodo.org/record/3755060/files/raw.zip
 F3_DATA_PATH = Path("Other_Data/F3/seismic_entire_volume.npy")
 # AIcrowd SEAM AI dataset. Download link: https://www.aicrowd.com/challenges/seismic-facies-identification-challenge
@@ -175,6 +175,8 @@ def plot_umap_with_density(
         x="UMAP1",
         y="UMAP2",
         color=color,
+        symbol_sequence=["circle-open"],
+        template="plotly_white",
     )
 
     # --- Density (right) ---
@@ -183,6 +185,7 @@ def plot_umap_with_density(
             df,
             x="UMAP1",
             y="UMAP2",
+            template="plotly_white",
         )
 
         # Fill contours + custom hover
@@ -247,9 +250,10 @@ def plot_umap_with_density(
         height=height,
         width=width,
         title=title,
-        # template="plotly_white",
+        template="plotly_white",
         showlegend=True,
         legend=dict(
+            itemsizing="constant",
             orientation="h",
             yanchor="bottom",
             y=1.12,
@@ -258,9 +262,23 @@ def plot_umap_with_density(
             bgcolor="rgba(255,255,255,0.7)",
             bordercolor="gray",
             borderwidth=1,
+            font=dict(family="Times New Roman", size=18),
         ),
         margin=dict(t=100, b=40),
-        font=dict(family="Times New Roman", size=24)
+        font=dict(family="Times New Roman", size=18)
+    )
+
+    # Update subplot title fonts
+    fig.update_layout(
+        annotations=[
+            dict(
+                font=dict(
+                    family="Times New Roman",
+                    size=18
+                )
+            )
+            for ann in fig.layout.annotations
+        ]
     )
 
     # Move colorbar so legend doesn’t overlap (for density heatmap/contour)
@@ -282,21 +300,26 @@ def parse_name(umap_kwargs: dict) -> str:
 
 
 def main():
-    umap_kwargs = {
-        "n_neighbors": 15,
-        "min_dist": 0.1,
-        "metric": "euclidean",
-        "random_state": 42,
-        "init": "spectral",
-    }
+    UMAP_FIGURES_PATH.mkdir(parents=True, exist_ok=True)
     
-    embeddings = get_umap_for_all_datasets(model=MODEL, **umap_kwargs)
-    fig = plot_umap_with_density(embeddings, color="dataset", density_type="contour")
+    for MODEL in ["resnet50_coco", "dinov2_vitb14"]:
+        print(f"------ Processing model: {MODEL} -----")
+        umap_kwargs = {
+            "n_neighbors": 15,
+            "min_dist": 0.1,
+            "metric": "euclidean",
+            # "random_state": 42,
+            "init": "spectral",
+        }
+        
+        embeddings = get_umap_for_all_datasets(model=MODEL, **umap_kwargs)
+        fig = plot_umap_with_density(embeddings, color="dataset", density_type="contour")
 
-    umap_params = "" if umap_kwargs is None else parse_name(umap_kwargs)
-    filename = UMAP_FIGURES_PATH / f"datasets_{MODEL}__umap__{umap_params}.pdf"
-    fig.write_image(filename)
-    print(f"Figure written to {filename}")
+        umap_params = "" if umap_kwargs is None else parse_name(umap_kwargs)
+        filename = UMAP_FIGURES_PATH / f"datasets__model-{MODEL}__umap__{umap_params}.pdf"
+        fig.write_image(filename)
+        print(f"Figure written to {filename}")
+        gc.collect()
 
 if __name__ == "__main__":
     main()
