@@ -14,7 +14,7 @@ from utils import (
 )
 
 METADATA_ALL_PATH = Path("../NAMSS_Metadata/2DSeismic_all_metadata.csv")
-DATA_PATH = Path("../Data/NAMSS")
+DATA_PATH = Path("../Data/unicamp-namss-dataset")
 UMAP_FIGURES_PATH = Path("figures/umap")
 
 
@@ -72,8 +72,9 @@ def load_metadata():
         enumerate(sorted(list(Path(DATA_PATH).rglob("*.tiff")))),
         desc="Processing metadata...",
     ):
-        survey = f.stem.split(".")[0].lower().strip()
-        partition = f.parent.name.split("_")[1]
+        survey = f.stem[5:].split(".")[0].lower().strip()
+        partition = f.parent.name
+        # print(f"Processing file: {f}, survey: {survey}, partition: {partition}")
         res = metadata_all[metadata_all["FileName"] == survey]
         if len(res) != 1:
             raise ValueError(
@@ -176,11 +177,26 @@ def multi_plot(
                 "Processed Method",
                 "Macro Region",
             ],
-            height=800,
-            width=800,
+            height=1000,
+            width=1000,
             symbol_sequence=["circle-open"],
+            template="plotly_white",
         )
-        fig.update_layout(font=dict(family="Times New Roman", size=24))
+
+        fig.update_traces(marker=dict(size=8, line=dict(width=1)))
+
+        fig.update_layout(
+            legend=dict(
+                itemsizing="constant",
+                font=dict(family="Times New Roman", size=18),
+                orientation="h",
+                yanchor="bottom",
+                y=1.02,
+                xanchor="center",
+                x=0.5,
+            ),
+            font=dict(family="Times New Roman", size=18),
+        )
 
         output_path = Path(
             figures_path
@@ -225,8 +241,8 @@ def main():
     ):
 
         params = {
-            "n_components": 2,
-            "random_state": 42,
+            # "n_components": 2,
+            # "random_state": 42,
             "n_neighbors": nn,
             "min_dist": md,
             "metric": metric,
@@ -256,7 +272,7 @@ def main():
                 embeddings=embeddings,
                 df=df,
                 umap_kwargs=umap_kwargs,
-                fname_prefix=f"namss_{name}",
+                fname_prefix=f"namss__model-{name}",
                 figures_path=UMAP_FIGURES_PATH,
             )
             end_time = time.time()

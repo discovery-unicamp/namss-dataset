@@ -12,7 +12,7 @@ class ResNetLike(nn.Module):
     
     def forward(self, x: Tensor) -> Tensor:
         x = self.model.backbone(x)["out"]
-        x = torch.nn.functional.avg_pool2d(x, kernel_size=x.shape[2:])  # These should be removed for deeplabv3
+        x = torch.nn.functional.avg_pool2d(x, kernel_size=x.shape[2:])
         x = torch.flatten(x, 1)
         return x
 
