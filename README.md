@@ -30,27 +30,17 @@ cd NAMSS_2DMigrated_Dataset
 
 This script will read all CSV files in `NAMSS_2DMigrated_Dataset/Migrated_Balanced` folder, download all files listed in it and save it into `NAMSS_2DMigrated_Dataset/Migrated_files` folder, which will contain a subfolder for each survey, and each survey folder will contain the downloaded SEGY files.
 
-### SEGY to TIFF Conversion
+### Creating the dataset
 
-Once the dataset is downloaded, convert the SEGY files to TIFF images by running:
+Once the dataset is downloaded, you can convert the SEGY files to TIFF images and create dataset splits using the provided scripts.
 
-```bash
-cd NAMSS_2DMigrated_Dataset
-python segy_to_img.py
-```
-
-This will save TIFF images in the `NAMSS_2DMigrated_Dataset/Migrated_TIFF` folder.
-
-### Creating Dataset Splits
-
-To create training, validation, and test splits of the dataset, run:
 
 ```bash
 cd NAMSS_2DMigrated_Dataset
-python create_dataset_from_tiff.py
+python create_dataset.py
 ```
 
-This script will split the dataset and save the splits in the `Data/NAMSS/NAMSS_{train/val/test}` folders.
+It will read all SEGY files in `NAMSS_2DMigrated_Dataset/Migrated_files`, convert them to TIFF images, normalize them to the range [-1, 1], and then save them into `Data/unicamp-namss-dataset` train, validation and test folders. This script make cleanup based on `NAMSS_2DMigrated_Dataset/curated_survey_list.csv` file, which contains the list of surveys that passed our quality control (manual inspection of images).
 
 ## Analysis Scripts
 
