@@ -188,14 +188,15 @@ def multi_plot(
         fig.update_layout(
             legend=dict(
                 itemsizing="constant",
-                font=dict(family="Times New Roman", size=18),
+                font=dict(family="Times New Roman", size=20),
                 orientation="h",
                 yanchor="bottom",
                 y=1.02,
                 xanchor="center",
                 x=0.5,
             ),
-            font=dict(family="Times New Roman", size=18),
+            font=dict(family="Times New Roman", size=20),
+            margin=dict(t=120, b=40),
         )
 
         output_path = Path(

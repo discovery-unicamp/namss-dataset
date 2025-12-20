@@ -262,10 +262,10 @@ def plot_umap_with_density(
             bgcolor="rgba(255,255,255,0.7)",
             bordercolor="gray",
             borderwidth=1,
-            font=dict(family="Times New Roman", size=18),
+            font=dict(family="Times New Roman", size=20),
         ),
-        margin=dict(t=100, b=40),
-        font=dict(family="Times New Roman", size=18)
+        margin=dict(t=120, b=40),
+        font=dict(family="Times New Roman", size=20)
     )
 
     # Update subplot title fonts
@@ -274,7 +274,7 @@ def plot_umap_with_density(
             dict(
                 font=dict(
                     family="Times New Roman",
-                    size=18
+                    size=20
                 )
             )
             for ann in fig.layout.annotations
